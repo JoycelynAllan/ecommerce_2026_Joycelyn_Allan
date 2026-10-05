@@ -1,0 +1,353 @@
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f1ea;
+    color: #0C3B2E;
+}
+
+header {
+    background-color: #0C3B2E;
+    padding: 24px 32px;
+    color: #f4f1ea;
+    border-bottom: 4px solid #FFBA00;
+}
+
+header h1 {
+    margin: 0 0 14px 0;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
+
+nav a {
+    color: #f4f1ea;
+    text-decoration: none;
+    margin-right: 18px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+nav a:hover {
+    background-color: #6D9773;
+    border-color: #6D9773;
+    color: #0C3B2E;
+}
+
+nav span {
+    color: #FFBA00;
+    margin-right: 18px;
+    font-weight: 600;
+}
+
+main {
+    padding: 32px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+main h2 {
+    color: #0C3B2E;
+    border-bottom: 3px solid #B46617;
+    display: inline-block;
+    padding-bottom: 6px;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 10px;
+    border: 1px solid #e0ddd3;
+    box-shadow: 0 2px 10px rgba(12, 59, 46, 0.08);
+    max-width: 420px;
+    margin-bottom: 24px;
+}
+
+form label {
+    font-weight: 600;
+    color: #0C3B2E;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    margin-bottom: 14px;
+    border: 2px solid #e0ddd3;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+form input:focus {
+    border-color: #6D9773;
+    outline: none;
+}
+
+form select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e0ddd3;
+    border-radius: 6px;
+    margin-top: 6px;
+}
+
+
+button {
+    background-color: #B46617;
+    color: #ffffff;
+    border: none;
+    padding: 12px 26px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+button:hover {
+    background-color: #FFBA00;
+    color: #0C3B2E;
+    transform: translateY(-1px);
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0ddd3;
+}
+
+table th {
+    background-color: #0C3B2E;
+    color: #FFBA00;
+    padding: 12px;
+    text-align: left;
+}
+
+table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0ddd3;
+}
+
+table tr:hover td {
+    background-color: #f4f1ea;
+}
+
+table a {
+    color: #B46617;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+table a:hover {
+    color: #0C3B2E;
+}
+
+
+p[style*="color:green"] {
+    background-color: #eaf2ea;
+    border-left: 4px solid #6D9773;
+    color: #0C3B2E;
+    padding: 10px 14px;
+    border-radius: 4px;
+}
+
+p[style*="color:red"] {
+    background-color: #fcefe2;
+    border-left: 4px solid #B46617;
+    color: #7a3e0c;
+    padding: 10px 14px;
+    border-radius: 4px;
+}
+
+/* ===== Footer ===== */
+footer {
+    background-color: #0C3B2E;
+    color: #d8d4c8;
+    padding: 20px;
+    margin-top: 48px;
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 4px solid #B46617;
+}
+
+footer p {
+    margin: 0;
+}
+
+
+.login-page {
+    background-color: #0F9B8E;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.login-card {
+    background-color: #ffffff;
+    border-radius: 24px;
+    padding: 40px 32px;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.login-card h2 {
+    color: #0F9B8E;
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+    border: none;
+}
+
+.login-card p.subtitle {
+    color: #888;
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+}
+
+.login-card form {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    max-width: none;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.login-card input[type="email"],
+.login-card input[type="password"] {
+    background-color: #f4f4f4;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 20px;
+}
+
+.login-card input:focus {
+    outline: 2px solid #0F9B8E;
+}
+
+.login-card button {
+    width: 100%;
+    background-color: #0F9B8E;
+    border-radius: 30px;
+    padding: 14px;
+    margin-top: 8px;
+}
+
+.login-card button:hover {
+    background-color: #0c7d72;
+}
+
+.login-card p.register-link {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.login-card p.register-link a {
+    color: #0F9B8E;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+
+.register-page {
+    background-color: #0F9B8E;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.register-card {
+    background-color: #ffffff;
+    border-radius: 24px;
+    padding: 40px 32px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.register-card h2 {
+    color: #0F9B8E;
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+    border: none;
+}
+
+.register-card p.subtitle {
+    color: #888;
+    margin-bottom: 24px;
+    font-size: 0.9rem;
+}
+
+.register-card form {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+    max-width: none;
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.register-card input[type="text"],
+.register-card input[type="email"],
+.register-card input[type="password"],
+.register-card select {
+    background-color: #f4f4f4;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 20px;
+}
+
+.register-card input:focus,
+.register-card select:focus {
+    outline: 2px solid #0F9B8E;
+}
+
+.register-card button {
+    width: 100%;
+    background-color: #0F9B8E;
+    border-radius: 30px;
+    padding: 14px;
+    margin-top: 8px;
+}
+
+.register-card button:hover {
+    background-color: #0c7d72;
+}
+
+.register-card p.login-link {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.register-card p.login-link a {
+    color: #0F9B8E;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-card .error-text {
+    color: #e03131;
+    font-size: 0.8rem;
+}
