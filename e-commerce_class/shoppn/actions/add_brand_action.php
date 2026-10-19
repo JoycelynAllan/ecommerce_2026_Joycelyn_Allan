@@ -1,7 +1,7 @@
 <?php
 
 require "../core/core.php";
-   require_once "../controllers/ProductController.php";
+require_once "../controllers/ProductController.php";
 
 require_admin();
 

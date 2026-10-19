@@ -3,9 +3,6 @@
 require "../core/core.php";
 require_once "../controllers/CustomerController.php";
 
-
-
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('../views/register.php');
 }
@@ -37,6 +34,21 @@ if (strlen($pass) < 8) {
     redirect('../views/register.php');
 }
 
+if (!preg_match('/[A-Z]/', $pass)) {
+    $_SESSION['error'] = 'Password must include at least one uppercase letter.';
+    redirect('../views/register.php');
+}
+
+if (!preg_match('/[a-z]/', $pass)) {
+    $_SESSION['error'] = 'Password must include at least one lowercase letter.';
+    redirect('../views/register.php');
+}
+
+if (!preg_match('/[0-9]/', $pass)) {
+    $_SESSION['error'] = 'Password must include at least one number.';
+    redirect('../views/register.php');
+}
+
 if (empty($country) || empty($city) || empty($contact)) {
     $_SESSION['error'] = 'All fields are required.';
     redirect('../views/register.php');
@@ -54,8 +66,10 @@ $result = $controller->register([
 ]);
 
 if ($result['success']) {
-    redirect('../views/account/my_account.php');
-} else {
+    $_SESSION['success'] = 'Account created successfully. Please log in.';
+    redirect('../views/login.php');
+    exit;
+}else {
     $_SESSION['error'] = $result['error'];
     redirect('../views/register.php');
 }

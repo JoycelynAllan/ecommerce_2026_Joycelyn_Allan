@@ -1,85 +1,117 @@
 <?php
 
-
 require "../../core/core.php";
 require_once "../../controllers/ProductController.php";
+
 require_admin();
 
-include '../layout/header.php';
-
 $controller = new ProductController();
-$brands = $controller->getAllBrands();
 
-$edit_brand = null;
+$editId = filter_var($_GET['edit_id'] ?? '', FILTER_VALIDATE_INT);
+$brand  = false;
 
-if (isset($_GET['edit_id'])) {
-    $edit_id = filter_var($_GET['edit_id'], FILTER_VALIDATE_INT);
-    if ($edit_id) {
-        $edit_brand = $controller->getBrandById($edit_id);
+if ($editId && $editId > 0) {
+    $brand = $controller->getBrandById($editId);
+
+    if (!$brand) {
+        $_SESSION['error'] = 'That brand could not be found.';
+        redirect('brand.php');
+        exit;
     }
 }
 
+$brands = $controller->getAllBrands();
+$isEdit = (bool)$brand;
+
+include '../layout/header.php';
 ?>
 
-<h2><?= $edit_brand ? 'Edit Brand' : 'Add Brand' ?></h2>
+<main>
+    <div class="page-title-row">
+        <h2>Manage Brands</h2>
+        <span class="count-pill"><?= count($brands) ?> brands</span>
+    </div>
 
-<?php if (!empty($_SESSION['success'])): ?>
-    <p style="color:green;"><?= htmlspecialchars($_SESSION['success']) ?></p>
-    <?php unset($_SESSION['success']); ?>
-<?php endif; ?>
-
-<?php if (!empty($_SESSION['error'])): ?>
-    <p style="color:red;"><?= htmlspecialchars($_SESSION['error']) ?></p>
-    <?php unset($_SESSION['error']); ?>
-<?php endif; ?>
-
-<?php if ($edit_brand): ?>
-
-    <form action="../../actions/update_brand_action.php" method="POST">
-        <input type="hidden" name="brand_id" value="<?= htmlspecialchars($edit_brand['brand_id']) ?>">
-
-        <label>Brand Name</label><br>
-        <input type="text" name="brand_name" value="<?= htmlspecialchars($edit_brand['brand_name']) ?>"><br><br>
-
-        <button type="submit">Update Brand</button>
-        <a href="brand.php">Cancel</a>
-    </form>
-
-<?php else: ?>
-
-    <form action="../../actions/add_brand_action.php" method="POST">
-        <label>Brand Name</label><br>
-        <input type="text" name="brand_name"><br><br>
-        <button type="submit">Add Brand</button>
-    </form>
-
-<?php endif; ?>
-
-<hr>
-
-<h3>Existing Brands</h3>
-
-<table border="1" cellpadding="8">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Action</th>
-    </tr>
-
-    <?php if (empty($brands)): ?>
-        <tr>
-            <td colspan="3">No brands yet.</td>
-        </tr>
-    <?php else: ?>
-        <?php foreach ($brands as $brand): ?>
-            <tr>
-                <td><?= htmlspecialchars($brand['brand_id']) ?></td>
-                <td><?= htmlspecialchars($brand['brand_name']) ?></td>
-                <td><a href="brand.php?edit_id=<?= $brand['brand_id'] ?>">Edit</a></td>
-            </tr>
-        <?php endforeach; ?>
+    <?php if (!empty($_SESSION['success'])): ?>
+        <p style="color:green;"><?= htmlspecialchars($_SESSION['success']) ?></p>
+        <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
 
-</table>
+    <?php if (!empty($_SESSION['error'])): ?>
+        <p style="color:red;"><?= htmlspecialchars($_SESSION['error']) ?></p>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
+    <div class="admin-split admin-split-narrow">
+        <section class="admin-panel admin-form-panel">
+            <h3><?= $isEdit ? 'Edit Brand' : 'Add Brand' ?></h3>
+
+            <form id="brand-form" method="POST" action="../../actions/<?= $isEdit ? 'update_brand_action.php' : 'add_brand_action.php' ?>">
+                <?php if ($isEdit): ?>
+                    <input type="hidden" name="brand_id" value="<?= (int)$brand['brand_id'] ?>">
+                <?php endif; ?>
+
+                <label for="brand_name">Brand Name</label>
+                <input type="text" name="brand_name" id="brand_name" maxlength="100"
+                       value="<?= $isEdit ? htmlspecialchars($brand['brand_name']) : '' ?>">
+
+                <p class="error-text" id="brand-error"></p>
+
+                <div class="form-buttons">
+                    <button type="submit"><?= $isEdit ? 'Update Brand' : 'Add Brand' ?></button>
+                    <?php if ($isEdit): ?>
+                        <a class="btn-link" href="brand.php">Cancel</a>
+                    <?php endif; ?>
+                </div>
+            </form>
+        </section>
+
+        <section class="admin-panel">
+            <h3>Existing Brands</h3>
+
+            <?php if (empty($brands)): ?>
+                <p class="muted">No brands yet. Add one using the form.</p>
+            <?php else: ?>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($brands as $b): ?>
+                                <tr class="<?= ($isEdit && (int)$brand['brand_id'] === (int)$b['brand_id']) ? 'row-active' : '' ?>">
+                                    <td><?= (int)$b['brand_id'] ?></td>
+                                    <td><strong><?= htmlspecialchars($b['brand_name']) ?></strong></td>
+                                    <td><a class="btn-small-link" href="brand.php?edit_id=<?= (int)$b['brand_id'] ?>">Edit</a></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </section>
+    </div>
+</main>
+
+<script>
+    document.getElementById('brand-form').addEventListener('submit', function (e) {
+        var name = document.getElementById('brand_name').value.trim();
+        var error = '';
+
+        if (name.length < 2) {
+            error = 'Please enter a brand name of at least 2 characters.';
+        }
+
+        document.getElementById('brand-error').textContent = error;
+
+        if (error) {
+            e.preventDefault();
+        }
+    });
+</script>
 
 <?php include '../layout/footer.php'; ?>

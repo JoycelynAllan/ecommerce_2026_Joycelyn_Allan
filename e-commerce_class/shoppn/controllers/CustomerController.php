@@ -41,6 +41,14 @@ class CustomerController {
 
     return ['success' => false, 'error' => 'Invalid email or password.'];
     }
+
+    public function getCustomerCount() {
+        return $this->customerModel->getCustomerCount();
+    }
+
+    public function getAllCustomers($search = '') {
+        return $this->customerModel->getAllCustomers($search);
+    }
 }
 
 ?>
